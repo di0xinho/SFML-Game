@@ -2,10 +2,9 @@
 #include "GameState.hpp"
 #include "StateMachine.hpp"
 
-MenuState::MenuState(StateMachine& machine)
-    : stateMachine(machine) {
+MenuState::MenuState(StateMachine& machine) : stateMachine(machine) {
     if (!font.loadFromFile("C:\\Users\\mm-20\\Desktop\\TestingGame2\\Assets\\Fonts\\Roboto.ttf")) {
-        // Obs³uga b³êdu ³adowania czcionki
+        // Obs³uga b³êdu za³adowania czczionki
         throw std::runtime_error("Nie mo¿na za³adowaæ czcionki");
     }
 
@@ -13,18 +12,17 @@ MenuState::MenuState(StateMachine& machine)
     title.setString("Platformer Game");
     title.setCharacterSize(50);
     title.setFillColor(sf::Color::White);
-    title.setPosition(200.0f, 150.0f); // Ustawienie pozycji tytu³u
+    title.setPosition(200.0f, 100.0f);
 
     instructions.setFont(font);
     instructions.setString("Press Enter to Start");
     instructions.setCharacterSize(30);
     instructions.setFillColor(sf::Color::White);
-    instructions.setPosition(220.0f, 300.0f); // Ustawienie pozycji instrukcji
+    instructions.setPosition(220.0f, 300.0f);
 }
 
 void MenuState::handleInput(sf::RenderWindow& window) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter)) {
-        // Zmiana stanu na GameState
         stateMachine.changeState(std::make_unique<GameState>(stateMachine));
     }
 }

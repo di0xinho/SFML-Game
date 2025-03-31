@@ -11,10 +11,17 @@ void StateMachine::popState() {
 }
 
 void StateMachine::changeState(std::unique_ptr<State> state) {
-    if (!states.empty()) {
+    while (!states.empty()) {
         states.pop();
     }
     states.push(std::move(state));
+}
+
+State* StateMachine::getCurrentState() {
+    if (!states.empty()) {
+        return states.top().get();
+    }
+    return nullptr;
 }
 
 void StateMachine::handleInput(sf::RenderWindow& window) {

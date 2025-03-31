@@ -9,8 +9,13 @@ public:
     PauseCommand(StateMachine& machine) : stateMachine(machine) {}
 
     void execute(sf::RenderWindow& window) override {
-        // Implementacja pauzy
-        stateMachine.pushState(std::make_unique<PauseState>(stateMachine));
+        // Sprawdzamy, czy obecny stan to PauseState
+        if (dynamic_cast<PauseState*>(stateMachine.getCurrentState())) {
+            stateMachine.popState(); // Odpauzowanie
+        }
+        else {
+            stateMachine.pushState(std::make_unique<PauseState>(stateMachine)); // Pauzowanie
+        }
     }
 
 private:
