@@ -19,8 +19,11 @@ int main() {
 
     // G³ówna pêtla gry
     while (window.isOpen()) {
-        // Obs³uga wejœcia
-        stateMachine.handleInput(window);
+        sf::Event event;
+        while (window.pollEvent(event)) {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
 
         // Obliczanie czasu delta
         float deltaTime = clock.restart().asSeconds();
@@ -28,7 +31,8 @@ int main() {
         // Czyszczenie okna
         window.clear();
 
-        // Aktualizacja i renderowanie stanów
+        // Obs³uga wejœcia, aktualizacja i renderowanie stanów
+        stateMachine.handleInput(window);
         stateMachine.update(deltaTime);
         stateMachine.render(window);
 

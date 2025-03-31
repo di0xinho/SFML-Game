@@ -5,7 +5,7 @@
 
 PauseState::PauseState(StateMachine& machine)
     : stateMachine(machine) {
-    if (!font.loadFromFile("C:\\Users\\mm-20\\Desktop\\TestingGame2\\Assets\\Fonts\\Roboto.ttf")) {
+    if (!font.loadFromFile("../../../../Assets/Fonts/Roboto.ttf")) {
         // Obs³uga b³êdu za³adowania czczionki
         throw std::runtime_error("Nie mo¿na za³adowaæ czcionki");
     }
@@ -28,6 +28,13 @@ void PauseState::handleInput(sf::RenderWindow& window) {
     static InputHandler inputHandler;
     inputHandler.bindCommand(sf::Keyboard::P, std::make_unique<PauseCommand>(stateMachine));
     inputHandler.handleInput(window);
+
+    sf::Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::Closed) {
+            window.close();
+        }
+    }
 }
 
 void PauseState::update(float deltaTime) {
