@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "StateMachine.hpp"
+#include "MenuState.hpp"
 #include "GameState.hpp"
 
 int main() {
@@ -7,9 +8,11 @@ int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "Platformer Game");
     window.setFramerateLimit(60); // Ograniczenie FPS do 60
 
-    // Utworzenie maszyny stanów i dodanie stanu gry
+    // Utworzenie maszyny stanów
     StateMachine stateMachine;
-    stateMachine.pushState(std::make_unique<GameState>());
+
+    // Dodanie stanu menu
+    stateMachine.pushState(std::make_unique<MenuState>(stateMachine));
 
     sf::Clock clock;
 

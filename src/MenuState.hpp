@@ -3,9 +3,9 @@
 
 class StateMachine;
 
-class GameState : public State {
+class MenuState : public State {
 public:
-    GameState(StateMachine& machine);
+    MenuState(StateMachine& machine);
 
     void handleInput(sf::RenderWindow& window) override;
     void update(float deltaTime) override;
@@ -13,7 +13,7 @@ public:
 
 private:
     StateMachine& stateMachine;
-    sf::RectangleShape player;
-    float velocityY;
-    bool isJumping;
+    sf::Font font;
+    sf::Text title;
+    sf::Text instructions;
 };

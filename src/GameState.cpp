@@ -4,8 +4,8 @@ const float GRAVITY = 500.0f; // Zwiêkszone wartoœci dla lepszej widocznoœci
 const float JUMP_SPEED = -300.0f;
 const float MOVE_SPEED = 200.0f;
 
-GameState::GameState()
-    : velocityY(0.0f), isJumping(false) {
+GameState::GameState(StateMachine& machine)
+    : stateMachine(machine), velocityY(0.0f), isJumping(false) {
     player.setSize(sf::Vector2f(50.0f, 50.0f));
     player.setFillColor(sf::Color::Green);
     player.setPosition(375.0f, 500.0f);
