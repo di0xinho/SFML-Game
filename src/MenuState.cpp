@@ -4,8 +4,9 @@
 
 MenuState::MenuState(StateMachine& machine)
     : stateMachine(machine) {
-    if (!font.loadFromFile("path/to/font.ttf")) {
+    if (!font.loadFromFile("C:\\Users\\mm-20\\Desktop\\TestingGame2\\Assets\\Fonts\\Roboto.ttf")) {
         // Obs³uga b³êdu ³adowania czcionki
+        throw std::runtime_error("Nie mo¿na za³adowaæ czcionki");
     }
 
     title.setFont(font);
