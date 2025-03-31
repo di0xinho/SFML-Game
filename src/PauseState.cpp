@@ -1,11 +1,10 @@
 #include "PauseState.hpp"
 #include "StateMachine.hpp"
-#include "InputHandler.hpp"
-#include "PauseCommand.hpp"
+#include "Config.hpp" // Dodanie nag³ówka z konfiguracj¹
 
 PauseState::PauseState(StateMachine& machine)
     : stateMachine(machine) {
-    if (!font.loadFromFile("../../../../Assets/Fonts/Roboto.ttf")) {
+    if (!font.loadFromFile(ASSET_PATH + "/Fonts/Roboto.ttf")) {
         // Obs³uga b³êdu za³adowania czczionki
         throw std::runtime_error("Nie mo¿na za³adowaæ czcionki");
     }
