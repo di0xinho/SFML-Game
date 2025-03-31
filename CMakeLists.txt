@@ -12,6 +12,9 @@ FetchContent_Declare(SFML
     SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-add_executable(main src/main.cpp "src/State.hpp" "src/GameState.cpp" "src/StateMachine.cpp" "src/MenuState.cpp" "src/PauseState.cpp" "src/MoveLeftCommand.cpp" "src/MoveRightCommand.cpp" "src/InputHandler.cpp" "src/JumpCommand.cpp")
+add_executable(main src/main.cpp "src/GameState.cpp" "src/StateMachine.cpp" "src/MenuState.cpp" "src/PauseState.cpp" "src/MoveLeftCommand.cpp" "src/MoveRightCommand.cpp" "src/InputHandler.cpp" "src/JumpCommand.cpp")
+
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE sfml-graphics sfml-window sfml-system sfml-audio)
+
+target_include_directories(main PRIVATE include)
