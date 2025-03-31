@@ -1,4 +1,6 @@
 #include "GameState.hpp"
+#include "PauseState.hpp"
+#include "StateMachine.hpp" // Dodajemy include dla StateMachine
 
 const float GRAVITY = 500.0f; // Zwiêkszone wartoœci dla lepszej widocznoœci
 const float JUMP_SPEED = -300.0f;
@@ -12,15 +14,25 @@ GameState::GameState(StateMachine& machine)
 }
 
 void GameState::handleInput(sf::RenderWindow& window) {
+    sf::Event event;
+    while (window.pollEvent(event)) {
+        if (event.type == sf::Event::KeyPressed) {
+            if (event.key.code == sf::Keyboard::P) {
+                // Prze³¹cz na stan pauzy
+                stateMachine.pushState(std::make_unique<PauseState>(stateMachine));
+            }
+            if (event.key.code == sf::Keyboard::Space && !isJumping) {
+                velocityY = JUMP_SPEED;
+                isJumping = true;
+            }
+        }
+    }
+
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         player.move(-MOVE_SPEED * 0.016f, 0.0f); // Przybli¿ony czas delta dla 60 FPS
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
         player.move(MOVE_SPEED * 0.016f, 0.0f);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space) && !isJumping) {
-        velocityY = JUMP_SPEED;
-        isJumping = true;
     }
 }
 

@@ -4,9 +4,9 @@
 // Deklaracja forward dla klasy StateMachine
 class StateMachine;
 
-class GameState : public State {
+class PauseState : public State {
 public:
-    GameState(StateMachine& machine);
+    PauseState(StateMachine& machine);
 
     void handleInput(sf::RenderWindow& window) override;
     void update(float deltaTime) override;
@@ -14,7 +14,7 @@ public:
 
 private:
     StateMachine& stateMachine;
-    sf::RectangleShape player;
-    float velocityY;
-    bool isJumping;
+    sf::Font font;
+    sf::Text pauseText;
+    sf::Text instructions;
 };

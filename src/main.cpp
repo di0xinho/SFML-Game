@@ -2,6 +2,7 @@
 #include "StateMachine.hpp"
 #include "MenuState.hpp"
 #include "GameState.hpp"
+#include "PauseState.hpp"
 
 int main() {
     // Utworzenie okna gry
@@ -18,11 +19,8 @@ int main() {
 
     // G³ówna pêtla gry
     while (window.isOpen()) {
-        sf::Event event;
-        while (window.pollEvent(event)) {
-            if (event.type == sf::Event::Closed)
-                window.close();
-        }
+        // Obs³uga wejœcia
+        stateMachine.handleInput(window);
 
         // Obliczanie czasu delta
         float deltaTime = clock.restart().asSeconds();
@@ -30,8 +28,7 @@ int main() {
         // Czyszczenie okna
         window.clear();
 
-        // Obs³uga wejœcia, aktualizacja i renderowanie stanów
-        stateMachine.handleInput(window);
+        // Aktualizacja i renderowanie stanów
         stateMachine.update(deltaTime);
         stateMachine.render(window);
 
