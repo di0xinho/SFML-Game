@@ -1,7 +1,7 @@
 #pragma once
 #include "State.hpp"
+#include "InputHandler.hpp"
 
-// Deklaracja forward dla klasy StateMachine
 class StateMachine;
 
 class GameState : public State {
@@ -14,6 +14,7 @@ public:
 
 private:
     StateMachine& stateMachine;
+    InputHandler inputHandler;
     sf::RectangleShape player;
     float velocityY;
     bool isJumping;

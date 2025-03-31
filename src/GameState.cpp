@@ -1,39 +1,28 @@
 #include "GameState.hpp"
 #include "PauseState.hpp"
-#include "StateMachine.hpp" // Dodajemy include dla StateMachine
+#include "StateMachine.hpp"
+#include "MoveLeftCommand.hpp"
+#include "MoveRightCommand.hpp"
+#include "JumpCommand.hpp"
+#include "PauseCommand.hpp"
 
-const float GRAVITY = 500.0f; // Zwiêkszone wartoœci dla lepszej widocznoœci
-const float JUMP_SPEED = -300.0f;
-const float MOVE_SPEED = 200.0f;
+const float GRAVITY = 500.0f;
 
 GameState::GameState(StateMachine& machine)
     : stateMachine(machine), velocityY(0.0f), isJumping(false) {
     player.setSize(sf::Vector2f(50.0f, 50.0f));
     player.setFillColor(sf::Color::Green);
     player.setPosition(375.0f, 500.0f);
+
+    // Mapowanie klawiszy do komend
+    inputHandler.bindCommand(sf::Keyboard::Left, std::make_unique<MoveLeftCommand>(player));
+    inputHandler.bindCommand(sf::Keyboard::Right, std::make_unique<MoveRightCommand>(player));
+    inputHandler.bindCommand(sf::Keyboard::Space, std::make_unique<JumpCommand>(player, velocityY, isJumping));
+    inputHandler.bindCommand(sf::Keyboard::P, std::make_unique<PauseCommand>(stateMachine));
 }
 
 void GameState::handleInput(sf::RenderWindow& window) {
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::KeyPressed) {
-            if (event.key.code == sf::Keyboard::P) {
-                // Prze³¹cz na stan pauzy
-                stateMachine.pushState(std::make_unique<PauseState>(stateMachine));
-            }
-            if (event.key.code == sf::Keyboard::Space && !isJumping) {
-                velocityY = JUMP_SPEED;
-                isJumping = true;
-            }
-        }
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        player.move(-MOVE_SPEED * 0.016f, 0.0f); // Przybli¿ony czas delta dla 60 FPS
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        player.move(MOVE_SPEED * 0.016f, 0.0f);
-    }
+    inputHandler.handleInput(window);
 }
 
 void GameState::update(float deltaTime) {
