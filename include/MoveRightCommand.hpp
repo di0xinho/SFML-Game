@@ -1,12 +1,9 @@
 #pragma once
-#include "Command.hpp"
-#include <SFML/Graphics.hpp>
+#include "MoveCommand.hpp"
 
-class MoveRightCommand : public Command {
+class MoveRightCommand : public MoveCommand {
 public:
-    MoveRightCommand(sf::RectangleShape& player) : player(player) {}
-    void execute(sf::RenderWindow& window) override;
-
-private:
-    sf::RectangleShape& player;
+    MoveRightCommand(sf::RectangleShape& player)
+        : MoveCommand(player, 5.0f) {
+    }
 };
