@@ -18,23 +18,21 @@ PauseState::PauseState(StateMachine& machine, SoundManager* soundManager)
     pauseText.setPosition(300, 150);
 
     instructions.setFont(font);
-    instructions.setString("Nacisnij P aby kontynuowac");
+    instructions.setString("Nacisnij U aby kontynuowac");
     instructions.setCharacterSize(30);
     instructions.setFillColor(sf::Color::White);
     instructions.setPosition(200, 300);
 }
 
+
 void PauseState::handleInput(sf::RenderWindow& window) {
-    
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::U)) {
+        soundManager->playMusic("game");
         stateMachine.popState();
-        //soundManager->playMusic("game");
     }
 }
 
-void PauseState::update(float deltaTime) {
-    // Aktualizacja logiki pauzy
-}
+void PauseState::update(float deltaTime){}
 
 void PauseState::render(sf::RenderWindow& window) {
     window.draw(pauseText);

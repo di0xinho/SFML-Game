@@ -10,7 +10,7 @@
 const float GRAVITY = 500.0f;
 
 GameState::GameState(StateMachine& machine, SoundManager* soundManager)
-    : stateMachine(machine), soundManager(soundManager), velocityY(0.0f), isJumping(false), scoreManager() {
+    : stateMachine(machine), soundManager(soundManager), velocityY(0.0f), isJumping(false), scoreManager(){
     player.setSize(sf::Vector2f(50.0f, 50.0f));
     player.setFillColor(sf::Color::Green);
     player.setPosition(375.0f, 500.0f);
@@ -29,12 +29,23 @@ GameState::GameState(StateMachine& machine, SoundManager* soundManager)
     soundManager->playMusic("game");
 }
 
+//void GameState::handleInput(sf::RenderWindow& window) {
+//
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+//        stateMachine.pushState(std::make_unique<PauseState>(stateMachine, soundManager));
+//    }
+//
+//    inputHandler.handleInput(window);
+//}
+
 void GameState::handleInput(sf::RenderWindow& window) {
+
     inputHandler.handleInput(window);
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
-        stateMachine.pushState(std::make_unique<PauseState>(stateMachine, soundManager));
-        //soundManager->pauseMusic("game");
+                stateMachine.pushState(std::make_unique<PauseState>(stateMachine, soundManager));
+                soundManager->pauseMusic("game");
+
     }
 }
 
@@ -50,6 +61,10 @@ void GameState::update(float deltaTime) {
         isJumping = false;
     }
 
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+        stateMachine.pushState(std::make_unique<PauseState>(stateMachine, soundManager));
+        std::cout << "Prze³aczam na pauze";
+    }
     // Aktualizacja punktacji
     // scoreManager.addPoints(10); // Przyk³adowe dodanie punktów
 }

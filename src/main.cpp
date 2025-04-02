@@ -4,6 +4,7 @@
 #include "GameState.hpp"
 #include "PauseState.hpp"
 #include "SoundManager.hpp"
+#include <iostream>
 
 int main() {
     // Utworzenie okna gry
@@ -32,6 +33,7 @@ int main() {
             if (event.type == sf::Event::Closed)
                 window.close();
         }
+        
 
         // Obliczanie czasu delta
         float deltaTime = clock.restart().asSeconds();

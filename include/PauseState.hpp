@@ -15,6 +15,7 @@ public:
 private:
     StateMachine& stateMachine;
     SoundManager* soundManager;
+    bool isPKeyPressed; // Flaga sprawdzaj¹ca, czy klawisz P jest naciœniêty
     sf::Font font;
     sf::Text pauseText;
     sf::Text instructions;
