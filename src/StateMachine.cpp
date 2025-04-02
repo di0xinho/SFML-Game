@@ -1,4 +1,5 @@
 #include "StateMachine.hpp"
+#include "SoundManager.hpp"
 
 void StateMachine::pushState(std::unique_ptr<State> state) {
     states.push(std::move(state));
@@ -11,17 +12,17 @@ void StateMachine::popState() {
 }
 
 void StateMachine::changeState(std::unique_ptr<State> state) {
-    while (!states.empty()) {
+    if (!states.empty()) {
         states.pop();
     }
     states.push(std::move(state));
 }
 
 State* StateMachine::getCurrentState() {
-    if (!states.empty()) {
-        return states.top().get();
+    if (states.empty()) {
+        return nullptr;
     }
-    return nullptr;
+    return states.top().get();
 }
 
 void StateMachine::handleInput(sf::RenderWindow& window) {
@@ -40,4 +41,8 @@ void StateMachine::render(sf::RenderWindow& window) {
     if (!states.empty()) {
         states.top()->render(window);
     }
+}
+
+SoundManager* StateMachine::getSoundManager() {
+    return soundManager;
 }

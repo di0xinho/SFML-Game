@@ -1,14 +1,19 @@
 #include "GameState.hpp"
 #include "PauseState.hpp"
 #include "StateMachine.hpp"
+#include "SoundManager.hpp"
 #include "ScoreManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>
 
 const float GRAVITY = 500.0f;
 
-GameState::GameState(StateMachine& machine)
-    : stateMachine(machine), velocityY(0.0f), isJumping(false), scoreManager() {
+GameState::GameState(StateMachine& machine, SoundManager* soundManager)
+    : stateMachine(machine), soundManager(soundManager), velocityY(0.0f), isJumping(false), scoreManager() {
+
+    // Inicjalizacja muzyki menu
+    soundManager->playMusic("game");
+
     player.setSize(sf::Vector2f(50.0f, 50.0f));
     player.setFillColor(sf::Color::Green);
     player.setPosition(375.0f, 500.0f);

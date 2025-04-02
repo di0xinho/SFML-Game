@@ -3,6 +3,7 @@
 #include "MenuState.hpp"
 #include "GameState.hpp"
 #include "PauseState.hpp"
+#include "SoundManager.hpp"
 
 int main() {
     // Utworzenie okna gry
@@ -12,8 +13,17 @@ int main() {
     // Utworzenie maszyny stanów
     StateMachine stateMachine;
 
+    // Utworzenie SoundManagera
+    SoundManager soundManager;
+
+    soundManager.loadMusic("menu", "../../../../Assets/Music/menu-music.ogg");
+    soundManager.setMusicLoop("menu", true); // Ustawienie zapêtlenia dla muzyki menu
+    soundManager.loadMusic("game", "../../../../Assets/Music/game-music.ogg");
+    soundManager.setMusicLoop("game", true); // Ustawienie zapêtlenia dla muzyki w grze
+
+
     // Dodanie stanu menu
-    stateMachine.pushState(std::make_unique<MenuState>(stateMachine));
+    stateMachine.pushState(std::make_unique<MenuState>(stateMachine, &soundManager));
 
     sf::Clock clock;
 
