@@ -13,7 +13,4 @@ public:
 
 private:
     std::unordered_map<sf::Keyboard::Key, std::unique_ptr<Command>> commandMap;
-    bool pKeyPressed = false;
-
-    bool isPKeyPressedOnce();
 };

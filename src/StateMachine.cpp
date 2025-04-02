@@ -1,5 +1,8 @@
 #include "StateMachine.hpp"
-#include "SoundManager.hpp"
+
+StateMachine::StateMachine(SoundManager* soundManager)
+    : soundManager(soundManager) {
+} // Inicjalizujemy soundManager
 
 void StateMachine::pushState(std::unique_ptr<State> state) {
     states.push(std::move(state));
@@ -41,8 +44,4 @@ void StateMachine::render(sf::RenderWindow& window) {
     if (!states.empty()) {
         states.top()->render(window);
     }
-}
-
-SoundManager* StateMachine::getSoundManager() {
-    return soundManager;
 }

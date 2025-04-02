@@ -1,19 +1,16 @@
 #include "GameState.hpp"
 #include "PauseState.hpp"
 #include "StateMachine.hpp"
-#include "SoundManager.hpp"
 #include "ScoreManager.hpp"
+#include "SoundManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>
+#include <iostream>
 
 const float GRAVITY = 500.0f;
 
 GameState::GameState(StateMachine& machine, SoundManager* soundManager)
     : stateMachine(machine), soundManager(soundManager), velocityY(0.0f), isJumping(false), scoreManager() {
-
-    // Inicjalizacja muzyki menu
-    soundManager->playMusic("game");
-
     player.setSize(sf::Vector2f(50.0f, 50.0f));
     player.setFillColor(sf::Color::Green);
     player.setPosition(375.0f, 500.0f);
@@ -23,24 +20,21 @@ GameState::GameState(StateMachine& machine, SoundManager* soundManager)
 
     // £adowanie czcionki
     sf::Font font;
-
-    if (!font.loadFromFile("../../../../Assets/Fonts/Roboto.ttf")) {
-        // Obs³uga b³êdu za³adowania czczionki
-        throw std::runtime_error("Nie mo¿na za³adowaæ czcionki");
+    if (!font.loadFromFile("../../../../Assets/Fonts/roboto.ttf")) {
+        // Obs³uga b³êdu
     }
-
     scoreManager.setFont(font);
     scoreManager.setPosition(10.0f, 10.0f);
+
+    soundManager->playMusic("game");
 }
 
 void GameState::handleInput(sf::RenderWindow& window) {
     inputHandler.handleInput(window);
 
-    sf::Event event;
-    while (window.pollEvent(event)) {
-        if (event.type == sf::Event::Closed) {
-            window.close();
-        }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P)) {
+        stateMachine.pushState(std::make_unique<PauseState>(stateMachine, soundManager));
+        //soundManager->pauseMusic("game");
     }
 }
 
