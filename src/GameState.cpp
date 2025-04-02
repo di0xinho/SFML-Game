@@ -1,10 +1,6 @@
 #include "GameState.hpp"
 #include "PauseState.hpp"
 #include "StateMachine.hpp"
-#include "MoveLeftCommand.hpp"
-#include "MoveRightCommand.hpp"
-#include "JumpCommand.hpp"
-#include "PauseCommand.hpp"
 #include "ScoreManager.hpp"
 #include <SFML/Graphics.hpp>
 #include <memory>
@@ -17,18 +13,17 @@ GameState::GameState(StateMachine& machine)
     player.setFillColor(sf::Color::Green);
     player.setPosition(375.0f, 500.0f);
 
-    // Mapowanie klawiszy do komend
-    inputHandler.bindCommand(sf::Keyboard::Left, std::make_unique<MoveLeftCommand>(player));
-    inputHandler.bindCommand(sf::Keyboard::Right, std::make_unique<MoveRightCommand>(player));
-    inputHandler.bindCommand(sf::Keyboard::Space, std::make_unique<JumpCommand>(player, velocityY, isJumping));
-    inputHandler.bindCommand(sf::Keyboard::P, std::make_unique<PauseCommand>(stateMachine));
+    // Inicjalizacja mapowania klawiszy do komend w InputHandler
+    inputHandler.initializeBindings(player, velocityY, isJumping, stateMachine);
 
     // £adowanie czcionki
     sf::Font font;
+
     if (!font.loadFromFile("../../../../Assets/Fonts/Roboto.ttf")) {
         // Obs³uga b³êdu za³adowania czczionki
         throw std::runtime_error("Nie mo¿na za³adowaæ czcionki");
     }
+
     scoreManager.setFont(font);
     scoreManager.setPosition(10.0f, 10.0f);
 }
@@ -55,6 +50,9 @@ void GameState::update(float deltaTime) {
         velocityY = 0.0f;
         isJumping = false;
     }
+
+    // Aktualizacja punktacji
+    // scoreManager.addPoints(10); // Przyk³adowe dodanie punktów
 }
 
 void GameState::render(sf::RenderWindow& window) {
